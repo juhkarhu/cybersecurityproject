@@ -1,0 +1,20 @@
+{% extends 'project/base.html' %}
+{% block content %}
+<h2>Profile</h2>
+<p><strong>Username: </strong>{{user.username}}</p>
+<p><strong>E-mail: </strong>{{user.profile.email|default_if_none:"Not set"}}</p>
+<p><strong>Phone-number: </strong>{{user.profile.phone|default_if_none:"Not set"}}</p>
+<br>
+<hr>
+<article class='media content-section'>
+  <div class='media-body'>
+    <h2>Update profile information:</h2>
+    <form class="site-form" action="{% url 'project:profile' user.username %}" method="post">
+        {% csrf_token %}
+        {{addProfileForm.as_p}}
+        <input type="submit" value="Update profile information">
+    </form>
+  </div>
+
+</article>
+{% endblock %}

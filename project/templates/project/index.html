@@ -1,0 +1,31 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>INDEX</h2>
+
+{% if latest_posts %}
+<ul>
+  {% for post in latest_posts %}
+
+  <article class='media content-section'>
+    <span class="border border-dark">
+      <div class='media-body'>
+        <div class='article-metadata'>
+          <h5 class='mr-2'>Title: {{ post.postTitle }}</h5> 
+        </div>
+        <p class='article-content'>Content: {{ post.postContent }}</p>
+        <p>By: {{ post.poster }}</p>
+      </div>
+
+    </span>
+    
+  </article>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No posts are available.</p>
+{% endif %}
+<br />
+
+{% endblock %}

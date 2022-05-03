@@ -1,0 +1,13 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="add_new_post">
+<h2>Make a post:</h2>
+
+<form class="site-form" action="{% url 'project:add_new_post' %}" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Make a post">
+    </form>
+</div>
+    {% endblock %}

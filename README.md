@@ -163,4 +163,5 @@ Same category as in Flaw 1, but slightly different mechanism in play. The weakne
 
 Luckily these are easy enough fixes. 
 Step 1: [Remove the @csrf_exempt decorator in views.py](https://github.com/juhkarhu/cybersecurityproject/blob/d9b144bc87a8620bdc7b2080fc8f5c5549fe4eac/project/views.py#L45).
+
 Step 2: [Add {% csrf_token %} above the '{{form.as_p}}' line in register.html](https://github.com/juhkarhu/cybersecurityproject/blob/290d681507f9b206585dd3b302b8cac809fe76cd/project/templates/project/register.html#L5).

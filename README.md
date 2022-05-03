@@ -24,6 +24,7 @@ You can easily remove users, posts and other information from the database by go
 There should be premade admin credentials for you to use with the following username and password.
 
 **Username**: admin
+
 **Password**: password
 
 

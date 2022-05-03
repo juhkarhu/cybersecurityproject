@@ -62,14 +62,15 @@ Previously found on OWASP's Top 10 list as *Broken Authentication*, Identificati
 
 Currently the application does not require anything from the passwords and they can be pretty much anything ('123', 'abc', etc.). This obviously isn't good so let's change that. 
 
-Since the application uses [Django's authentication system](https://docs.djangoproject.com/en/4.0/topics/auth/default/), we can quire easily add some [password validators](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/#module-django.contrib.auth.password_validation) for Django to use in the registration form. There actually are some prefedined validators ready in settings.py although they are currently commented. Validators can be found under the 'AUTH_PASSWORD_VALIDATORS' variable (to be precise, the validators are on lines 123-134). 
+Since the application uses [Django's authentication system](https://docs.djangoproject.com/en/4.0/topics/auth/default/), we can quire easily add some [password validators](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/#module-django.contrib.auth.password_validation) for Django to use in the registration form. There actually are some prefedined validators ready in settings.py although they are currently commented. Validators can be found under the [AUTH_PASSWORD_VALIDATORS](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/cybersecurityproject/settings.py#L93) variable . 
 
 
 ## Flaw 3: [Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/) 
 
 New category in OWASP's Top 10 list, Insecure Design focuses on risks related to design and architectural flaws, with a emphasis among other things in secure design patterns. Although a broad category, it is distinct between insecure design and implementation (e.g., insecure implementation of password validators). 
 
-One of the ways of improving the design if writing [tests](https://docs.djangoproject.com/en/4.0/topics/testing/overview/). Secure design ensures that code is robustly designed and tested to prevent known attack methods. In our case, we could write tests that test that ensures that password validators work as intented with different combinations. 
+One of the ways of improving the design if writing [tests](https://docs.djangoproject.com/en/4.0/topics/testing/overview/). Secure design ensures that code is robustly designed and tested to prevent known attack methods. In our case, we could write tests that test that ensures that password validators work as intented with different combinations (this can be added straight to the [tests.py](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/project/tests.py#L5). 
+
 
 ```python
 class BaseTest(TestCase):
@@ -99,7 +100,7 @@ Fortunately adding logging in Django is quite easy using [Django's logging syste
 
 Lack of proper security logging and monitoring is often overlooked, as many developers feel like it is only necessary for development purposes. Currently the website has no logging whatsoever and we need to add records to some auditable events, such as logins and form submits to monitor any suspicious activity.
 
-In order to add logging functionality to the application, we can use Django's built-in logging system. First we must set-up the logging in the settings.py file by adding the following to the bottom of the file. 
+In order to add logging functionality to the application, we can use Django's built-in logging system. First we must set-up the logging in the [settings.py](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/cybersecurityproject/settings.py#L127) file by adding the following to the bottom of the file. 
 
 ```python
 LOGGING = {
@@ -153,7 +154,7 @@ logger.info('User registration succesfull with the following username: {}'.forma
 Last but not least on my list of vulnerabilities on my application is outdated components. Even small projects (especially on some languages/frameworks) can require quite a bit of outside libraries to import functionality and services. OWASP makes it quite clear when you are vulnerable regarding this:
 > If you do not know the versions of all components you use (both client-side and server-side).
 
-To prevent this, all components, documentation, files, dependencies and features that aren't used should be removed. One should always aim to keep all the components and apps updated. This can be easily done with package manager such as [pip](https://pypi.org/project/pip/). In this project there is [django-staticfiles](https://github.com/jezdez/django-staticfiles) named app on the INSTALLED_APPS list in settings.py (note that it is commented out for safety and should not be installed). 
+To prevent this, all components, documentation, files, dependencies and features that aren't used should be removed. One should always aim to keep all the components and apps updated. This can be easily done with package manager such as [pip](https://pypi.org/project/pip/). In this project there is [django-staticfiles](https://github.com/jezdez/django-staticfiles) named app on the [INSTALLED_APPS](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/cybersecurityproject/settings.py#L41) list in settings.py (note that it is commented out for safety and should not be installed). 
 
 
 ## Flaw 6: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)

@@ -2,7 +2,7 @@
 
 My project for [Cyber Security Base 2022](https://cybersecuritybase.mooc.fi/) courses Course Project I assignment. The goal for the project is to construct software with at least five security flaws from the [OWASP Top 10 Web Application Security Risks](https://owasp.org/www-project-top-ten/) list. In the list below, I have pointed out each flaw, how to use it, and how to fix it in code. 
 
-The repository can be found here: LINK HERE
+The repository can be found here: https://github.com/juhkarhu/cybersecurityproject
 
 To use the project on your own machine, download and extract the files, open terminal in the project directory and type: 
 
@@ -39,7 +39,7 @@ In the contect of this application, the vulnerability caused by broken access co
 
 ### **How to fix**
 
-To fix this, you will need two things. Firstly there should be the following decorator above the profile_view function requiring the user entering that view to be logged in. This can be achieved like this:
+To fix this, you will need two things. Firstly there should be the following decorator above the [profile_view](https://github.com/juhkarhu/cybersecurityproject/blob/2e1af464c21b1fc3f4d7a923155fdd27af7b7d1f/project/views.py#L16) function requiring the user entering that view to be logged in. This can be achieved like this:
 
 ```python
 @login_required(login_url='/login') # <-- This is the decorator in question

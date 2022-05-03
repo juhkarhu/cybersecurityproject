@@ -159,7 +159,7 @@ To prevent this, all components, documentation, files, dependencies and features
 
 ## Flaw 6: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
-Same category as in Flaw 1, but slightly different mechanism in play. The weakness in question is [Cross-Site Request Forgery](https://cwe.mitre.org/data/definitions/352.html). Due to a overlook by the developers, they left a '@csrf_exempt' decorator in the views.py above the 'register_view' method. To add insult to injury, they also forgot to add {% csrf_token %} in the 'register.html' form. 
+Same category as in Flaw 1, but slightly different mechanism in play. The weakness in question is [Cross-Site Request Forgery](https://cwe.mitre.org/data/definitions/352.html). Due to a overlook by the developers, they left a '@csrf_exempt' decorator in the views.py above the 'register_view' method. To add insult to injury, they also forgot to add {% csrf_token %} in the [register.html form](https://github.com/juhkarhu/cybersecurityproject/blob/290d681507f9b206585dd3b302b8cac809fe76cd/project/templates/project/register.html#L5). 
 
 Luckily these are easy enough fixes. 
 Step 1: Remove the @csrf_exempt decorator in views.py.

@@ -22,6 +22,7 @@ Once the application is running, it's address should be displayed on the termina
 You can easily remove users, posts and other information from the database by going to the Django's admin interface in the following address: http://127.0.0.1:8000/admin/
 
 There should be premade admin credentials for you to use with the following username and password.
+
 **Username**: admin
 **Password**: password
 

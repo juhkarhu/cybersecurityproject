@@ -19,22 +19,6 @@ class Post(models.Model):
     postContent = models.CharField('Post Content', max_length=250)
     date = models.DateTimeField(null=False, blank=False,auto_now_add=True)
 
-
-# class Comment(models.Model):
-#     poster = models.ForeignKey(User, on_delete=models.CASCADE)
-#     relatedPost = models.ForeignKey(Post, on_delete=models.CASCADE)
-#     comment = models.TextField('Comment')
-
-
-# class Message(models.Model):
-#     source = models.ForeignKey(User, on_delete=models.CASCADE, related_name='source')
-#     target = models.ForeignKey(User, on_delete=models.CASCADE, related_name='target')
-#     content = models.TextField()
-#     time = models.DateTimeField(auto_now_add=True)
-
-
-# Extending the base User model of Django's: 
-# https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

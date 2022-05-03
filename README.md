@@ -1,6 +1,6 @@
 # Cyber Security Base 2022 - Course Project I
 
-My project for Cyber Security Base 2022 courses Course Project I assignment. The goal for the project is to construct software with at least five security flaws from the [OWASP Top 10 Web Application Security Risks](https://owasp.org/www-project-top-ten/) list. In the list below, I have pointed out each flaw, how to use it, and how to fix it in code. 
+My project for [Cyber Security Base 2022](https://cybersecuritybase.mooc.fi/) courses Course Project I assignment. The goal for the project is to construct software with at least five security flaws from the [OWASP Top 10 Web Application Security Risks](https://owasp.org/www-project-top-ten/) list. In the list below, I have pointed out each flaw, how to use it, and how to fix it in code. 
 
 The repository can be found here: LINK HERE
 

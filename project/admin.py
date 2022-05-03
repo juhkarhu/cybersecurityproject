@@ -4,5 +4,3 @@ from .models import Post, Profile
 # Register your models here.
 admin.site.register(Profile)
 admin.site.register(Post)
-# admin.site.register(Comment)
-# admin.site.register(Message)

@@ -1,7 +1,5 @@
 from django import forms
 from . import models
-from django.contrib.auth.forms import UserCreationForm, UserModel
-from django.contrib.auth import password_validation
 
 class AddNewPost(forms.ModelForm):
     class Meta:

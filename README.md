@@ -31,7 +31,17 @@ There should be premade admin credentials for you to use with the following user
 ---
 
 
-## Flaw 1: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
+## Flaw 1: [Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)  
+
+Previously found on OWASP's Top 10 list as *Broken Authentication*, Identification and Authentication failures can occur when the function's that are related to the user's identity and authentication are overlooked in design/development phase or not being protected by the application adequately enough. According to OWASP there may be authentication weakness if the application:
+> Permits default, weak, or well-known passwords, such as "Password1" or "admin/admin"
+
+Currently the application does not require anything from the passwords and they can be pretty much anything ('123', 'abc', etc.). This obviously isn't good so let's change that. 
+
+Since the application uses [Django's authentication system](https://docs.djangoproject.com/en/4.0/topics/auth/default/), we can quire easily add some [password validators](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/#module-django.contrib.auth.password_validation) for Django to use in the registration form. There actually are some prefedined validators ready in settings.py although they are currently commented. Validators can be found under the [AUTH_PASSWORD_VALIDATORS](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/cybersecurityproject/settings.py#L93) variable . 
+
+
+## Flaw 2: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
 One of the most, if not the, prevelant vulnerability in software is broken access control, which only seems to rise in popularity each year. Access control enforces such policiess that users cannot act outside their intented permissions. In the context of web applications, such as this, access control is dependent on authentication and session management. 
 
@@ -55,17 +65,18 @@ def profile_view(request, username):
 ```
 
 
-## Flaw 2: [Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)  
+## Flaw 3: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
-Previously found on OWASP's Top 10 list as *Broken Authentication*, Identification and Authentication failures can occur when the function's that are related to the user's identity and authentication are overlooked in design/development phase or not being protected by the application adequately enough. According to OWASP there may be authentication weakness if the application:
-> Permits default, weak, or well-known passwords, such as "Password1" or "admin/admin"
+Same category as in Flaw 1, but slightly different mechanism in play. The weakness in question is [Cross-Site Request Forgery](https://cwe.mitre.org/data/definitions/352.html). Due to a overlook by the developers, they left a '@csrf_exempt' decorator in the views.py above the 'register_view' method. To add insult to injury, they also forgot to add {% csrf_token %} in the register.html form. 
 
-Currently the application does not require anything from the passwords and they can be pretty much anything ('123', 'abc', etc.). This obviously isn't good so let's change that. 
+Luckily these are easy enough fixes. 
 
-Since the application uses [Django's authentication system](https://docs.djangoproject.com/en/4.0/topics/auth/default/), we can quire easily add some [password validators](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/#module-django.contrib.auth.password_validation) for Django to use in the registration form. There actually are some prefedined validators ready in settings.py although they are currently commented. Validators can be found under the [AUTH_PASSWORD_VALIDATORS](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/cybersecurityproject/settings.py#L93) variable . 
+Step 1: [Remove the @csrf_exempt decorator in views.py](https://github.com/juhkarhu/cybersecurityproject/blob/d9b144bc87a8620bdc7b2080fc8f5c5549fe4eac/project/views.py#L45).
+
+Step 2: [Add {% csrf_token %} above the '{{form.as_p}}' line in register.html](https://github.com/juhkarhu/cybersecurityproject/blob/290d681507f9b206585dd3b302b8cac809fe76cd/project/templates/project/register.html#L5).
 
 
-## Flaw 3: [Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/) 
+## Flaw 4: [Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/) 
 
 New category in OWASP's Top 10 list, Insecure Design focuses on risks related to design and architectural flaws, with a emphasis among other things in secure design patterns. Although a broad category, it is distinct between insecure design and implementation (e.g., insecure implementation of password validators). 
 
@@ -92,7 +103,7 @@ class RegisterTest(BaseTest):
 It is noteworthy that, since I'm redirecting user after succesfull registration, the expected status code is 302. A status code 200 is expected if the registration is unsuccesfull and it just loads the same registration page. 
 
 
-## Flaw 4: [Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)  
+## Flaw 5: [Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)  
 
 Wouldn't it be nice to have a log of everything that has happened in your application. Having logs is nice, reading them can be boring but the thought of making them seems to be the most boring since it has it's own place on OWASP Top 10 list. Logging is quite often an afterthought, if not complemetely overlooked, even if most would agree it helps the both the development and maintaining the app. 
 
@@ -149,7 +160,7 @@ logger.info('User registration succesfull with the following username: {}'.forma
 ```
 
 
-## Flaw 5: [Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)  
+## Flaw 6: [Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)  
 
 Last but not least on my list of vulnerabilities on my application is outdated components. Even small projects (especially on some languages/frameworks) can require quite a bit of outside libraries to import functionality and services. OWASP makes it quite clear when you are vulnerable regarding this:
 > If you do not know the versions of all components you use (both client-side and server-side).
@@ -157,12 +168,4 @@ Last but not least on my list of vulnerabilities on my application is outdated c
 To prevent this, all components, documentation, files, dependencies and features that aren't used should be removed. One should always aim to keep all the components and apps updated. This can be easily done with package manager such as [pip](https://pypi.org/project/pip/). In this project there is [django-staticfiles](https://github.com/jezdez/django-staticfiles) named app on the [INSTALLED_APPS](https://github.com/juhkarhu/cybersecurityproject/blob/2b5e0039e0e4abedb173f0d3182f157474e99b6d/cybersecurityproject/settings.py#L41) list in settings.py (note that it is commented out for safety and should not be installed). 
 
 
-## Flaw 6: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
-Same category as in Flaw 1, but slightly different mechanism in play. The weakness in question is [Cross-Site Request Forgery](https://cwe.mitre.org/data/definitions/352.html). Due to a overlook by the developers, they left a '@csrf_exempt' decorator in the views.py above the 'register_view' method. To add insult to injury, they also forgot to add {% csrf_token %} in the register.html form. 
-
-Luckily these are easy enough fixes. 
-
-Step 1: [Remove the @csrf_exempt decorator in views.py](https://github.com/juhkarhu/cybersecurityproject/blob/d9b144bc87a8620bdc7b2080fc8f5c5549fe4eac/project/views.py#L45).
-
-Step 2: [Add {% csrf_token %} above the '{{form.as_p}}' line in register.html](https://github.com/juhkarhu/cybersecurityproject/blob/290d681507f9b206585dd3b302b8cac809fe76cd/project/templates/project/register.html#L5).

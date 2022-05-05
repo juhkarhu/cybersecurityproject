@@ -56,10 +56,10 @@ To fix this, you will need two things. Firstly there should be the following dec
 def profile_view(request, username):
 ```
 
-Then secondly, there should be a check that checks if the user that is trying to enter his/her own profile, and if not redirect said user elsewhere. This is fixed be adding the following two lines of code just at the start of the function. 
+Then secondly, there should be a check that checks if the user that is trying to enter his/her own profile, and if not redirect said user elsewhere. This is fixed be adding the following two lines of code just at the [start of the function](https://github.com/juhkarhu/cybersecurityproject/blob/7003e16f80840ac99a08ec5e3fc0bff23f9754ce/project/views.py#L16). 
 
 ```python
-[def profile_view(request, username):](https://github.com/juhkarhu/cybersecurityproject/blob/7003e16f80840ac99a08ec5e3fc0bff23f9754ce/project/views.py#L16)
+def profile_view(request, username):
     if request.user.username != username:   # <-- This 
         return redirect('project:index')    # <-- And this line 
 ```

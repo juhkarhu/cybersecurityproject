@@ -17,16 +17,21 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-Once the application is running, it's address should be displayed on the terminal (probably something along the lines of http://127.0.0.1:8000/). 
+Once the application is running, it's address should be displayed on the terminal (most likely something along the lines of http://127.0.0.1:8000/). 
 
 You can easily remove users, posts and other information from the database by going to the Django's admin interface in the following address: http://127.0.0.1:8000/admin/
 
-There should be premade admin credentials for you to use with the following username and password.
+There should be premade admin credentials for you to use with the following username and password. 
 
 **Username**: admin
 
 **Password**: password
 
+If you had to run the migrate-commands, then you have to create admin yourself. This can be achieved with the following command:
+
+```
+python manage.py createsuperuser
+```
 
 ---
 

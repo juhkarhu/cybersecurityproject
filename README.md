@@ -50,7 +50,7 @@ Since the application uses [Django's authentication system](https://docs.djangop
 
 One of the most, if not the, prevelant vulnerability in software is broken access control, which only seems to rise in popularity each year. Access control enforces such policiess that users cannot act outside their intented permissions. In the context of web applications, such as this, access control is dependent on authentication and session management. 
 
-In the contect of this application, the vulnerability caused by broken access control is known as *key identifier change*, which allows unwanted access to users to perform actions that would be otherwise unauthorized. In this application, users have profile with some personal information fields. Everyone's profile should currently be visible only to the user in question, but sadly developers forgot to implement this. This exploit can be used in this application by simply going 'http://localhost:8000/profile/' and adding the user's username to the end of the address. Even users that aren't logged in can go and view the information (even the occasional bypasser can enter that page and alter the info even though it reports error when updating information - so the vulnerability does not even need users to be logged in). 
+In the context of this application, the vulnerability caused by broken access control is known as *key identifier change*, which allows unwanted access to users to perform actions that would be otherwise unauthorized. In this application, users have profile with some personal information fields. Everyone's profile should currently be visible only to the user in question, but sadly developers forgot to implement this. This exploit can be used in this application by simply going to 'http://localhost:8000/profile/' and adding the user's username to the end of the address. Even users that aren't logged in can go and view the information (even the occasional bypasser can enter that page and alter the info even though it reports error when updating information - so the vulnerability does not even need users to be logged in). 
 
 ### **How to fix**
 
@@ -72,7 +72,7 @@ def profile_view(request, username):
 
 ## Flaw 3: [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
-Same category as in Flaw 1, but slightly different mechanism in play. The weakness in question is [Cross-Site Request Forgery](https://cwe.mitre.org/data/definitions/352.html). Due to a overlook by the developers, they left a '@csrf_exempt' decorator in the views.py above the 'register_view' method. To add insult to injury, they also forgot to add {% csrf_token %} in the register.html form. 
+Same category as in Flaw 2, but a different mechanism in play. The weakness in question is [Cross-Site Request Forgery](https://cwe.mitre.org/data/definitions/352.html). Due to a overlook by the developers, they left a '@csrf_exempt' decorator in the views.py above the 'register_view' method. To add insult to injury, they also forgot to add {% csrf_token %} in the register.html form. 
 
 Luckily these are easy enough fixes. 
 
@@ -157,7 +157,7 @@ import logging
 logger = logging.getLogger(__name__)
 ```
 
-Then we can log events as we please like so for example when registration is succesfull:
+Then we can log events as we please like so for example when [registration is succesfull](https://github.com/juhkarhu/cybersecurityproject/blob/ea8281b5a259686c138d56078bc6d57e31e28a31/project/views.py#L50):
 
 ```python
 logger.info('User registration succesfull with the following username: {}'.format(user.username))

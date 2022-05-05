@@ -102,10 +102,10 @@ class BaseTest(TestCase):
 class RegisterTest(BaseTest):
     def test_can_not_use_abc_as_password(self):
         response = self.client.post(self.registration_url, self.user)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 ```
 
-It is noteworthy that, since I'm redirecting user after succesfull registration, the expected status code is 302. A status code 200 is expected if the registration is unsuccesfull and it just loads the same registration page. 
+Because I'm redirecting users after a succesfull registration, the expected status code for unsuccesfull registration is 200. That is because unssuccesfull registration leads to the same page. So any code that tests valid password, should expect 302 status code. 
 
 
 ## Flaw 5: [Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)  
